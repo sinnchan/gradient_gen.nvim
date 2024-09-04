@@ -4,7 +4,7 @@ local color = require('src.color')
 
 local default_config = {
   gradient_level = 12,
-  background = "#282c34",
+  background = nil,
   base_colors = {
     "#34A853",
     "#4285F4",
@@ -19,8 +19,15 @@ M.scope_color_keys = {}
 M.indent_color_keys = {}
 
 function M.setup(config)
+  default_config.background = string.format(
+    "#%06x",
+    vim.api.nvim_get_hl(0, { name = "Normal" }).bg
+  )
+
   if config == nil then config = {} end
   setmetatable(config, { __index = default_config })
+
+  vim.print(config)
 
   local colors = color.gen_gradient(config.base_colors, config.gradient_level)
   for i, _color in ipairs(colors) do
