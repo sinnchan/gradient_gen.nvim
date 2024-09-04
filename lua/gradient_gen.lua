@@ -27,8 +27,6 @@ function M.setup(config)
   if config == nil then config = {} end
   setmetatable(config, { __index = default_config })
 
-  vim.print(config)
-
   local colors = color.gen_gradient(config.base_colors, config.gradient_level)
   for i, _color in ipairs(colors) do
     local delimiter_color_key = "DelimiterColor" .. i
